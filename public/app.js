@@ -67,12 +67,18 @@ function addChatMessage(username, message) {
   const item = document.createElement("li");
   item.textContent = `${username}: ${message}`;
   messages.appendChild(item);
+  scrollToBottom(messages);
 }
 
 function addPrivateMessage(sender, message) {
   const item = document.createElement("li");
   item.textContent = `${sender} (private): ${message}`;
   privateMessages.appendChild(item);
+  scrollToBottom(privateMessages);
+}
+
+function scrollToBottom(element) {
+  element.scrollTop = element.scrollHeight;
 }
 
 joinForm.addEventListener("submit", (e) => {
