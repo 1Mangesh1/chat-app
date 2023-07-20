@@ -1,229 +1,240 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Chat App</title>
-  <style>
-    body {
-      margin: 0;
-      padding-bottom: 3rem;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f6f6f6;
-      color: #333;
-    }
-  
-    #container {
-      display: flex;
-      flex-direction: column;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 10px;
-    }
-  
-    #chatroom, #privateChat {
-      border: 1px solid #ccc;
-      padding: 15px;
-      background-color: #fff;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 10px;
-    }
-  
-    #userList {
-      padding: 10px;
-      background-color: #4caf50;
-      color: #ffffff;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-  
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-      color: #4285f4;
-    }
-  
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 30px;
-    }
-  
-    label,
-    input {
-      margin-bottom: 10px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-    }
-  
-    input {
-      width: 100%;
-    }
-  
-    button {
-      padding: 8px 15px;
-      background-color: #4caf50;
-      color: #ffffff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.2s;
-    }
-  
-    button:hover {
-      background-color: #45a049;
-    }
-  
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-  
-    li {
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-    }
-  
-    li:last-child {
-      border-bottom: none;
-    }
-  
-    .message-container {
-      flex: 1;
-    }
-  
-    #messages, #privateMessages {
-      max-height: 250px;
-      overflow-y: auto;
-    }
-  
-    .chat-input {
-      display: flex;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      margin-top: 10px;
-      align-items: center;
-      padding: 5px;
-    }
-  
-    .chat-input input {
-      flex: 1;
-      padding: 8px;
-      margin-right: 5px;
-      border: none;
-      background: none;
-      color: #333;
-      outline: none;
-    }
-  
-    .chat-input button {
-      padding: 8px 15px;
-      background-color: #4285f4;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-  
-    .chat-input button:hover {
-      background-color: #1a73e8;
-    }
-  
-    #typingNow {
-      color: #121212;
-      font-style: italic;
-      margin-top: 10px;
-    }
-  
-    /* Styles for the "user connected" message */
-    .userConnectedMessage {
-      background-color: #07e507;
-      color: #c31212;
-      text-align: center;
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 10px;
-    }
-  
-    /* Styles for the "user disconnected" message */
-    .userDisconnectedMessage {
-      background-color: #d9534f;
-      color: #ffffff;
-      text-align: center;
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 10px;
-    }
+  <head>
+    <title>Chat App</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: #f6f6f6;
+        color: #333;
+      }
 
-    /* Responsive Styles */
-    @media (max-width: 768px) {
       #container {
+        display: flex;
+        flex-direction: column;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+
+      #chatroom,
+      #privateChat {
+        border: 1px solid #ccc;
+        padding: 15px;
+        background-color: #fff;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+      }
+
+      #userList {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #ffffff;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #4285f4;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      label,
+      input {
+        margin-bottom: 10px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      button {
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      ul {
+        list-style-type: none;
         margin: 0;
         padding: 0;
       }
 
-      #divi {
-        padding: 20px;
+      li {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
       }
 
-      #userList {
-        margin-bottom: 0;
+      li:last-child {
+        border-bottom: none;
       }
-      
-      #chatroom, #privateChat {
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <h1>Welcome to Chat App</h1>
-  <div id="container">
-    <form id="joinForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" required pattern="[^\s]*" />
-      <label for="username">Username:</label>
-      <input type="text" id="username" required pattern="[^\s]*" />
-      <button type="submit">Join Chat</button>
-    </form>
 
-    <div id="chatroom" style="display: none">
-      <h2>Chatroom</h2>
-      <ul id="messages"></ul>
-      
-      <form id="form" class="chat-input">
-        <input id="input" autocomplete="off" placeholder="Type your message..." />
-        <button>Send</button>
+      .message-container {
+        flex: 1;
+      }
+
+      #messages,
+      #privateMessages {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .chat-input {
+        display: flex;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        margin-top: 10px;
+        align-items: center;
+        padding: 5px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 8px;
+        margin-right: 5px;
+        border: none;
+        background: none;
+        color: #333;
+        outline: none;
+      }
+
+      .chat-input button {
+        padding: 8px 15px;
+        background-color: #4285f4;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .chat-input button:hover {
+        background-color: #1a73e8;
+      }
+
+      #typingNow {
+        color: #121212;
+        font-style: italic;
+        margin-top: 10px;
+      }
+
+      /* Styles for the "user connected" message */
+      .userConnectedMessage {
+        background-color: #07e507;
+        color: #c31212;
+        text-align: center;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+
+      /* Styles for the "user disconnected" message */
+      .userDisconnectedMessage {
+        background-color: #d9534f;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        #container {
+          margin: 0;
+          padding: 0;
+        }
+
+        #divi {
+          padding: 20px;
+        }
+
+        #userList {
+          margin-bottom: 0;
+        }
+
+        #chatroom,
+        #privateChat {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Chat App</h1>
+    <div id="container">
+      <form id="joinForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required pattern="[^\s]*" />
+        <label for="username">Username:</label>
+        <input type="text" id="username" required pattern="[^\s]*" />
+        <button type="submit">Join Chat</button>
       </form>
-      <div id="typingNow"></div>
-    </div>
-    <div id="divi">
-      <p>Click on any user to chat privately </p>
-      <p>Online Users:</p>
-      <ul id="userList"></ul>
+
+      <div id="chatroom" style="display: none">
+        <h2>Chatroom</h2>
+        <ul id="messages"></ul>
+
+        <form id="form" class="chat-input">
+          <input
+            id="input"
+            autocomplete="off"
+            placeholder="Type your message..."
+          />
+          <button>Send</button>
+        </form>
+        <div id="typingNow"></div>
+      </div>
+      <div id="divi">
+        <p>Click on any user to chat privatly </p>
+        <p>Online Users:</p>
+        <ul id="userList"></ul>
+      </div>
+
+      <div id="privateChat" style="display: none">
+        <h2>Private Chat</h2>
+        <ul id="privateMessages"></ul>
+        <form id="privateForm" class="chat-input">
+          <input id="recipient" type="text" placeholder="Recipient Username" />
+          <input
+            id="privateInput"
+            autocomplete="off"
+            placeholder="Type your private message..."
+          />
+          <button>Send</button>
+        </form>
+      </div>
     </div>
 
-    <div id="privateChat" style="display: none">
-      <h2>Private Chat</h2>
-      <ul id="privateMessages"></ul>
-      <form id="privateForm" class="chat-input">
-        <input id="recipient" type="text" placeholder="Recipient Username" />
-        <input id="privateInput" autocomplete="off" placeholder="Type your private message..." />
-        <button>Send</button>
-      </form>
-    </div>
-   
-  </div>
- 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="app.js"></script>
-</body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
