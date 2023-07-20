@@ -2,5 +2,15 @@
   "dependencies": {
     "express": "^4.18.2",
     "socket.io": "^4.7.1"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "chatapp3",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "author": "mangesh",
+  "license": "MIT",
+  "description": ""
 }
