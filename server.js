@@ -1,6 +1,8 @@
+//https://chat-app-rhlw.onrender.com/
+const { Socket } = require("dgram");
 const express = require("express");
 const app = express();
-const http = require('http');
+const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
@@ -14,12 +16,16 @@ io.on("connection", (socket) => {
   // socket.emit("userConnected", { username: users[socket.id]?.username });
 
   // When a user joins
+
   socket.on("join", (userData) => {
     const { name, username } = userData;
     users[socket.id] = { name, username };
     console.log(`User ${username} with socket ID ${socket.id} joined.`);
     socket.broadcast.emit("userConnected", { username });
-    io.emit("onlineUsers", Object.values(users).map((user) => user.username));
+    io.emit(
+      "onlineUsers",
+      Object.values(users).map((user) => user.username)
+    );
   });
 
   socket.on("chatMessage", (msg) => {
@@ -28,21 +34,26 @@ io.on("connection", (socket) => {
     io.emit("chatMessage", { username, message: msg });
   });
 
-  socket.on("privateMessage", ({ recipient, message }) => {
-    const { username } = users[socket.id];
+  socket.on("privateMessage", ({ sender, message, recipient }) => {
     const recipientSocket = Object.keys(users).find(
       (socketId) => users[socketId].username === recipient
     );
-
-    if (recipientSocket) {
+  
+    if (recipientSocket && socket.id !== recipientSocket) {
       io.to(recipientSocket).emit("privateMessage", {
-        sender: username,
-        message,
+        sender: sender,
+        message: message,
+        recipient: "You",
       });
       socket.emit("privateMessage", {
         sender: "You",
-        message,
+        message: message,
+        recipient: recipient,
+      });
+    } else if (socket.id === recipientSocket) {
+      socket.emit("privateMessageError", {
         recipient,
+        message: "You cannot send a private message to yourself.",
       });
     } else {
       socket.emit("privateMessageError", {
@@ -51,6 +62,9 @@ io.on("connection", (socket) => {
       });
     }
   });
+  
+  
+  
 
   socket.on("typing", () => {
     const { username } = users[socket.id];
@@ -67,7 +81,10 @@ io.on("connection", (socket) => {
     delete users[socket.id];
     console.log(`User ${username} with socket ID ${socket.id} disconnected.`);
     io.emit("userDisconnected", { username });
-    io.emit("onlineUsers", Object.values(users).map((user) => user.username));
+    io.emit(
+      "onlineUsers",
+      Object.values(users).map((user) => user.username)
+    );
   });
 });
 
