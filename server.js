@@ -11,7 +11,7 @@ app.use(express.static(__dirname + "/public"));
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
-  socket.emit("userConnected", { username: users[socket.id]?.username });
+  // socket.emit("userConnected", { username: users[socket.id]?.username });
 
   // When a user joins
   socket.on("join", (userData) => {
