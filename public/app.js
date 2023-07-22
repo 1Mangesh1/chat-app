@@ -59,9 +59,6 @@ function sendMessage(msg) {
   socket.emit("chatMessage", msg);
 }
 
-
-
-
 function addChatMessage(username, message) {
   const item = document.createElement("li");
   item.textContent = `${username}: ${message}`;
@@ -75,7 +72,6 @@ function addPrivateMessage(sender, message, recipient) {
   privateMessages.appendChild(item);
   scrollToBottom(privateMessages);
 }
-
 
 function scrollToBottom(element) {
   element.scrollTop = element.scrollHeight;
@@ -113,6 +109,7 @@ recipientInput.addEventListener("input", () => {
       break;
     }
   }
+
   if (isRecipientOnline) {
     recipientInput.style.border = "2px solid #07e507";
   } else {
@@ -124,6 +121,7 @@ userList.addEventListener("click", (e) => {
   if (e.target && e.target.nodeName === "LI") {
     const recipient = e.target.textContent;
     recipientInput.value = recipient;
+    recipientInput.disabled = true; // Disable the recipient input
   }
 });
 
@@ -134,6 +132,7 @@ privateForm.addEventListener("submit", (e) => {
   if (recipient && msg) {
     sendPrivateMessage(recipient, msg);
     privateInput.value = "";
+    recipientInput.disabled = false; // Re-enable the recipient input
   }
 });
 
@@ -195,8 +194,8 @@ socket.on("chatMessage", ({ username, message }) => {
   addChatMessage(username, message);
 });
 
-socket.on("privateMessage", ({ sender, message ,recipient}) => {
-  addPrivateMessage(sender, message,recipient);
+socket.on("privateMessage", ({ sender, message, recipient }) => {
+  addPrivateMessage(sender, message, recipient);
 });
 
 socket.on("privateMessageError", ({ recipient, message }) => {
