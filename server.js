@@ -12,6 +12,9 @@ const users = {};
 app.use(express.static(__dirname + "/public"));
 
 io.on("connection", (socket) => {
+    if(!users[socket.id]){
+    users[socket.id] = { name: "Anonymous", username: "Anonymous" };
+  }
   console.log("User connected:", socket.id);
   // socket.emit("userConnected", { username: users[socket.id]?.username });
 
