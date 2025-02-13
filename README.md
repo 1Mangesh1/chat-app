@@ -10,9 +10,7 @@ Welcome to the Chat App! This is a real-time chat application built using Socket
 - Typing indicator: Users get notified when someone is typing a message.
 - Online users list: The app displays a list of online users in the chatroom.
 
-## Demo
 
-Check out the live demo of the app [here](https://chat-app-rhlw.onrender.com/).
 
 ## Installation
 
@@ -66,7 +64,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 This app is deployed on AWS EC2 instance. You can access the app using the following link:
 
-- [Chat App](http//chat-app.mangeshbide.tech)
+[Chat App](http//chat-app.mangeshbide.tech)
 
 Find terraform code to deploy this app on AWS EC2 instance [here](https://github.com/1Mangesh1/chat-app-infra)
 
