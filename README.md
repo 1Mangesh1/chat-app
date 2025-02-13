@@ -62,3 +62,12 @@ npm start
 This project is licensed under the [MIT License](LICENSE).
 
 
+## Deployed on EC2
+
+This app is deployed on AWS EC2 instance. You can access the app using the following link:
+
+- [Chat App](http//chat-app.mangeshbide.tech)
+
+Find terraform code to deploy this app on AWS EC2 instance [here](https://github.com/1Mangesh1/chat-app-infra)
+
+
